@@ -1,5 +1,6 @@
 package com.varunbarad.takehome.notes
 
+import com.varunbarad.takehome.notes.external_services.local_database.model.DbNote
 import com.varunbarad.takehome.notes.repositories.NotesRepository
 import com.varunbarad.takehome.notes.screens.create_note.CreateNotePresenter
 import com.varunbarad.takehome.notes.screens.create_note.CreateNoteView
@@ -8,6 +9,7 @@ import com.varunbarad.takehome.notes.util.Event
 import com.varunbarad.takehome.notes.util.MAX_TITLE_LENGTH
 import com.varunbarad.takehome.notes.util.ThreadSchedulers
 import io.reactivex.Observable
+import io.reactivex.Single
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -42,16 +44,20 @@ class CreateNotePresenterTest {
     @Test
     fun testBothInputFieldValueReadWhenSaveButtonClick() {
         `when`(createNoteView.onButtonSaveNoteClick()).thenReturn(Observable.just(Event.IGNORE))
+        `when`(createNoteView.getTitleEditTextValue()).thenReturn(validNoteTitle)
+        `when`(createNoteView.getContentsEditTextValue()).thenReturn(validNoteContent)
 
         createNotePresenter.onStart()
 
-        verify(createNoteView, times(1)).getTitleEditTextValue()
-        verify(createNoteView, times(1)).getContentsEditTextValue()
+        verify(createNoteView).getTitleEditTextValue()
+        verify(createNoteView).getContentsEditTextValue()
     }
 
     @Test
     fun testNoInputFieldValueReadWhenSaveButtonNotClick() {
         `when`(createNoteView.onButtonSaveNoteClick()).thenReturn(Observable.never())
+        `when`(createNoteView.getTitleEditTextValue()).thenReturn(validNoteTitle)
+        `when`(createNoteView.getContentsEditTextValue()).thenReturn(validNoteContent)
 
         createNotePresenter.onStart()
 
@@ -64,6 +70,15 @@ class CreateNotePresenterTest {
         `when`(createNoteView.onButtonSaveNoteClick()).thenReturn(Observable.just(Event.IGNORE))
         `when`(createNoteView.getTitleEditTextValue()).thenReturn(validNoteTitle)
         `when`(createNoteView.getContentsEditTextValue()).thenReturn(validNoteContent)
+        `when`(
+            notesRepository.insertNewNote(
+                DbNote(
+                    title = validNoteTitle,
+                    contents = validNoteContent
+                )
+            )
+        )
+            .thenReturn(Single.just(1))
 
         createNotePresenter.onStart()
 
