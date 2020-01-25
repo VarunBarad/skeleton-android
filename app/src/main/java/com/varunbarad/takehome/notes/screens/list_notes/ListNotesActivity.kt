@@ -1,11 +1,11 @@
 package com.varunbarad.takehome.notes.screens.list_notes
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.varunbarad.takehome.notes.R
 import com.varunbarad.takehome.notes.databinding.ActivityListNotesBinding
+import com.varunbarad.takehome.notes.screens.create_note.CreateNoteActivity
 import com.varunbarad.takehome.notes.util.Event
 import io.reactivex.Observable
 
@@ -44,7 +44,6 @@ class ListNotesActivity : AppCompatActivity(), ListNotesView {
     }
 
     override fun openCreateNoteScreen() {
-        // ToDo: Open New Note screen
-        Toast.makeText(this, "Open new note screen", Toast.LENGTH_SHORT).show()
+        CreateNoteActivity.start(this)
     }
 }
