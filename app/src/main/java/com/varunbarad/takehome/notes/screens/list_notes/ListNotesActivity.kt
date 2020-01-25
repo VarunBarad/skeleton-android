@@ -1,6 +1,7 @@
 package com.varunbarad.takehome.notes.screens.list_notes
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -73,6 +74,14 @@ class ListNotesActivity : AppCompatActivity(), ListNotesView {
 
     override fun updateScreen(viewState: ListNotesViewState) {
         this.notesAdapter.submitList(viewState.notes)
+
+        if (viewState.isNoStoredNotesMessageVisible) {
+            this.viewBinding.recyclerViewNotes.visibility = View.GONE
+            this.viewBinding.textViewEmptyNotesMessage.visibility = View.VISIBLE
+        } else {
+            this.viewBinding.recyclerViewNotes.visibility = View.VISIBLE
+            this.viewBinding.textViewEmptyNotesMessage.visibility = View.GONE
+        }
     }
 
     override fun showMessage(messageText: String) {
