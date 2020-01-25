@@ -1,6 +1,5 @@
 package com.varunbarad.takehome.notes.screens.create_note
 
-import android.util.Log
 import com.varunbarad.takehome.notes.external_services.local_database.model.DbNote
 import com.varunbarad.takehome.notes.repositories.NotesRepository
 import io.reactivex.disposables.CompositeDisposable
@@ -106,8 +105,7 @@ class CreateNotePresenter(
                         )
                     ).subscribeBy(
                         onError = {
-                            // ToDo: Show message on screen
-                            Log.e("varunvarun", it.message ?: "varun error message")
+                            this.view.showMessage("Error adding note. Try again later.")
                         },
                         onSuccess = { noteId ->
                             // ToDo: Pass note-id here

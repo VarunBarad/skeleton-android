@@ -11,5 +11,7 @@ interface CreateNoteView {
 
     fun updateScreen(viewState: CreateNoteViewState)
 
+    fun showMessage(messageText: String)
+
     fun openNoteDetailsScreen()
 }

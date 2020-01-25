@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.google.android.material.snackbar.Snackbar
 import com.varunbarad.takehome.notes.R
 import com.varunbarad.takehome.notes.databinding.ActivityCreateNoteBinding
 import com.varunbarad.takehome.notes.repositories.InMemoryNotesRepository
@@ -78,6 +79,14 @@ class CreateNoteActivity : AppCompatActivity(), CreateNoteView {
 
         this.viewBinding.textInputTitle.isErrorEnabled = viewState.showTitleError
         this.viewBinding.textInputContent.isErrorEnabled = viewState.showContentsError
+    }
+
+    override fun showMessage(messageText: String) {
+        Snackbar.make(
+            this.viewBinding.root,
+            messageText,
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     override fun openNoteDetailsScreen() {
