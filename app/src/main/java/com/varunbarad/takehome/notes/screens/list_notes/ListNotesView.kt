@@ -4,7 +4,7 @@ import com.varunbarad.takehome.notes.util.Event
 import io.reactivex.Observable
 
 interface ListNotesView {
-    fun onButtonNewNoteClick(): Observable<Event>
+    fun onButtonCreateNoteClick(): Observable<Event>
 
-    fun openNewNoteScreen()
+    fun openCreateNoteScreen()
 }

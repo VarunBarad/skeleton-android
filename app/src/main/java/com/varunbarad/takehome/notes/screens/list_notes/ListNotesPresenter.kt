@@ -11,9 +11,9 @@ class ListNotesPresenter(
     fun onStart() {
         this.serviceDisposables.add(
             this.view
-                .onButtonNewNoteClick()
+                .onButtonCreateNoteClick()
                 .subscribeBy {
-                    this.view.openNewNoteScreen()
+                    this.view.openCreateNoteScreen()
                 }
         )
     }

@@ -33,19 +33,19 @@ class ListNotesPresenterTest {
 
     @Test
     fun testNewNoteScreenOpenWhenNewNoteButtonClick() {
-        `when`(listNotesView.onButtonNewNoteClick()).thenReturn(Observable.just(Event.IGNORE))
+        `when`(listNotesView.onButtonCreateNoteClick()).thenReturn(Observable.just(Event.IGNORE))
 
         listNotesPresenter.onStart()
 
-        verify(listNotesView).openNewNoteScreen()
+        verify(listNotesView).openCreateNoteScreen()
     }
 
     @Test
     fun testNewNoteScreenNotOpenWhenNewNoteButtonNotClick() {
-        `when`(listNotesView.onButtonNewNoteClick()).thenReturn(Observable.never())
+        `when`(listNotesView.onButtonCreateNoteClick()).thenReturn(Observable.never())
 
         listNotesPresenter.onStart()
 
-        verify(listNotesView, never()).openNewNoteScreen()
+        verify(listNotesView, never()).openCreateNoteScreen()
     }
 }

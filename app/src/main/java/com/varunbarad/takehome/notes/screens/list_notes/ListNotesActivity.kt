@@ -31,19 +31,19 @@ class ListNotesActivity : AppCompatActivity(), ListNotesView {
     override fun onStop() {
         this.presenter.onStop()
 
-        this.viewBinding.buttonNewNote.setOnClickListener(null)
+        this.viewBinding.buttonCreateNote.setOnClickListener(null)
 
         super.onStop()
     }
 
-    override fun onButtonNewNoteClick(): Observable<Event> {
+    override fun onButtonCreateNoteClick(): Observable<Event> {
         return Observable.create { emitter ->
-            this.viewBinding.buttonNewNote.setOnClickListener { emitter.onNext(Event.IGNORE) }
-            emitter.setCancellable { this.viewBinding.buttonNewNote.setOnClickListener(null) }
+            this.viewBinding.buttonCreateNote.setOnClickListener { emitter.onNext(Event.IGNORE) }
+            emitter.setCancellable { this.viewBinding.buttonCreateNote.setOnClickListener(null) }
         }
     }
 
-    override fun openNewNoteScreen() {
+    override fun openCreateNoteScreen() {
         // ToDo: Open New Note screen
         Toast.makeText(this, "Open new note screen", Toast.LENGTH_SHORT).show()
     }
