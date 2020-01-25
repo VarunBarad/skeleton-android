@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.ListAdapter
 import com.varunbarad.takehome.notes.databinding.ListItemNoteBinding
 import com.varunbarad.takehome.notes.model.UiNote
 import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 
 class NotesAdapter : ListAdapter<UiNote, NoteViewHolder>(UiNote.DIFF_CALLBACK) {
-    private val noteClickSubject: BehaviorSubject<UiNote> = BehaviorSubject.create()
+    private val noteClickSubject: PublishSubject<UiNote> = PublishSubject.create()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(
