@@ -89,7 +89,7 @@ class CreateNoteActivity : AppCompatActivity(), CreateNoteView {
         ).show()
     }
 
-    override fun openNoteDetailsScreen() {
+    override fun openNoteDetailsScreen(noteId: Long) {
         // ToDo: Open Note Details screen and finish this activity so it gets removed from stack
         Toast.makeText(this, "Open note details screen", Toast.LENGTH_SHORT).show()
     }

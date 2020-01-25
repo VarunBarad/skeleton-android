@@ -108,8 +108,7 @@ class CreateNotePresenter(
                             this.view.showMessage("Error adding note. Try again later.")
                         },
                         onSuccess = { noteId ->
-                            // ToDo: Pass note-id here
-                            this.view.openNoteDetailsScreen()
+                            this.view.openNoteDetailsScreen(noteId)
                         }
                     )
             )

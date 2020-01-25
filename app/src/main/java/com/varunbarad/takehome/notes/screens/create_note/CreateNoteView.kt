@@ -13,5 +13,5 @@ interface CreateNoteView {
 
     fun showMessage(messageText: String)
 
-    fun openNoteDetailsScreen()
+    fun openNoteDetailsScreen(noteId: Long)
 }

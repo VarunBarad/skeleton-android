@@ -77,12 +77,11 @@ class CreateNotePresenterTest {
                     contents = validNoteContent
                 )
             )
-        )
-            .thenReturn(Single.just(1))
+        ).thenReturn(Single.just(validNoteId))
 
         createNotePresenter.onStart()
 
-        verify(createNoteView).openNoteDetailsScreen()
+        verify(createNoteView).openNoteDetailsScreen(validNoteId)
     }
 
     @Test
@@ -91,7 +90,7 @@ class CreateNotePresenterTest {
 
         createNotePresenter.onStart()
 
-        verify(createNoteView, never()).openNoteDetailsScreen()
+        verify(createNoteView, never()).openNoteDetailsScreen(validNoteId)
     }
 
     @Test
@@ -102,7 +101,7 @@ class CreateNotePresenterTest {
 
         createNotePresenter.onStart()
 
-        verify(createNoteView, never()).openNoteDetailsScreen()
+        verify(createNoteView, never()).openNoteDetailsScreen(validNoteId)
     }
 
     @Test
@@ -113,7 +112,7 @@ class CreateNotePresenterTest {
 
         createNotePresenter.onStart()
 
-        verify(createNoteView, never()).openNoteDetailsScreen()
+        verify(createNoteView, never()).openNoteDetailsScreen(validNoteId)
     }
 
     @Test
@@ -124,7 +123,7 @@ class CreateNotePresenterTest {
 
         createNotePresenter.onStart()
 
-        verify(createNoteView, never()).openNoteDetailsScreen()
+        verify(createNoteView, never()).openNoteDetailsScreen(validNoteId)
     }
 
     @Test
@@ -237,6 +236,8 @@ class CreateNotePresenterTest {
             )
         )
     }
+
+    private val validNoteId: Long = 1
 
     private val validNoteTitle = "This is a valid title"
     private val validNoteContent = "This is a valid note content"
