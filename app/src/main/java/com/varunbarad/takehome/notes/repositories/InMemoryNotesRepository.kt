@@ -6,7 +6,7 @@ import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
 import java.util.*
 
-class InMemoryNotesRepository : NotesRepository {
+object InMemoryNotesRepository : NotesRepository {
     private val notes: MutableList<DbNote> = mutableListOf()
 
     private val notesSubject: BehaviorSubject<List<DbNote>> = BehaviorSubject.create()

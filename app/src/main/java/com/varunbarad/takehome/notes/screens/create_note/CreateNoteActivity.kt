@@ -37,7 +37,7 @@ class CreateNoteActivity : AppCompatActivity(), CreateNoteView {
 
         this.presenter = CreateNotePresenter(
             this,
-            InMemoryNotesRepository()
+            InMemoryNotesRepository
         )
     }
 
