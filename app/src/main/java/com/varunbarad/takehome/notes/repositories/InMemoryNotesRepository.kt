@@ -34,4 +34,8 @@ class InMemoryNotesRepository : NotesRepository {
     override fun getAllNotesSortedReverseChronologically(): Observable<List<DbNote>> {
         return this.notesSubject
     }
+
+    override fun getNoteDetails(noteId: Long): Single<DbNote> {
+        return Single.just(this.notes.first { it.id == noteId })
+    }
 }
