@@ -13,12 +13,15 @@
         <activity
             android:name=".screens.list_notes.ListNotesActivity"
             android:label="@string/title_activity_list_notes">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".screens.create_note.CreateNoteActivity"
+            android:parentActivityName=".screens.list_notes.ListNotesActivity" />
     </application>
 </manifest>
