@@ -27,6 +27,12 @@ class ListNotesPresenter(
                 .map { databaseNotes: List<DbNote> -> databaseNotes.map { it.toUiNote() } }
                 .subscribeBy { notes -> this.view.updateScreen(ListNotesViewState(notes)) }
         )
+
+        this.serviceDisposables.add(
+            this.view
+                .onNoteClick()
+                .subscribeBy { note -> this.view.openNoteDetailsScreen(note.noteId) }
+        )
     }
 
     fun onStop() {
