@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.varunbarad.takehome.notes.R
 import com.varunbarad.takehome.notes.databinding.ActivityListNotesBinding
 import com.varunbarad.takehome.notes.model.UiNote
+import com.varunbarad.takehome.notes.repositories.InMemoryNotesRepository
 import com.varunbarad.takehome.notes.screens.create_note.CreateNoteActivity
 import com.varunbarad.takehome.notes.screens.list_notes.notes_adapter.NotesAdapter
 import com.varunbarad.takehome.notes.screens.note_details.NoteDetailsActivity
@@ -40,7 +42,10 @@ class ListNotesActivity : AppCompatActivity(), ListNotesView {
         )
         this.viewBinding.recyclerViewNotes.adapter = this.notesAdapter
 
-        this.presenter = ListNotesPresenter(this)
+        this.presenter = ListNotesPresenter(
+            this,
+            InMemoryNotesRepository
+        )
     }
 
     override fun onStart() {
@@ -65,6 +70,18 @@ class ListNotesActivity : AppCompatActivity(), ListNotesView {
     }
 
     override fun onNoteClick(): Observable<UiNote> = this.notesAdapter.getNoteClickObservable()
+
+    override fun updateScreen(viewState: ListNotesViewState) {
+        this.notesAdapter.submitList(viewState.notes)
+    }
+
+    override fun showMessage(messageText: String) {
+        Snackbar.make(
+            this.viewBinding.root,
+            messageText,
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
 
     override fun openCreateNoteScreen() {
         CreateNoteActivity.start(this)
