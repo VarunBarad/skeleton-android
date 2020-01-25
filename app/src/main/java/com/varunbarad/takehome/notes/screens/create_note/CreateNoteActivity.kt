@@ -3,12 +3,16 @@ package com.varunbarad.takehome.notes.screens.create_note
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.varunbarad.takehome.notes.R
 import com.varunbarad.takehome.notes.databinding.ActivityCreateNoteBinding
+import com.varunbarad.takehome.notes.repositories.InMemoryNotesRepository
+import com.varunbarad.takehome.notes.util.Event
+import io.reactivex.Observable
 
-class CreateNoteActivity : AppCompatActivity() {
+class CreateNoteActivity : AppCompatActivity(), CreateNoteView {
     companion object {
         @JvmStatic
         fun start(context: Context) {
@@ -17,6 +21,8 @@ class CreateNoteActivity : AppCompatActivity() {
     }
 
     private lateinit var viewBinding: ActivityCreateNoteBinding
+
+    private lateinit var presenter: CreateNotePresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,5 +33,55 @@ class CreateNoteActivity : AppCompatActivity() {
 
         this.setSupportActionBar(this.viewBinding.toolbar)
         this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        this.presenter = CreateNotePresenter(
+            this,
+            InMemoryNotesRepository()
+        )
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        this.presenter.onStart()
+    }
+
+    override fun onStop() {
+        this.presenter.onStop()
+
+        this.viewBinding.buttonSaveNote.setOnClickListener(null)
+
+        super.onStop()
+    }
+
+    override fun onButtonSaveNoteClick(): Observable<Event> {
+        return Observable.create { emitter ->
+            this.viewBinding.buttonSaveNote.setOnClickListener { emitter.onNext(Event.IGNORE) }
+            emitter.setCancellable { this.viewBinding.buttonSaveNote.setOnClickListener(null) }
+        }
+    }
+
+    override fun getTitleEditTextValue(): String {
+        return this.viewBinding.editTextTitle.text.toString()
+    }
+
+    override fun getContentsEditTextValue(): String {
+        return this.viewBinding.editTextContent.text.toString()
+    }
+
+    override fun updateScreen(viewState: CreateNoteViewState) {
+        this.viewBinding.editTextTitle.setText(viewState.titleValue)
+        this.viewBinding.editTextContent.setText(viewState.contentsValue)
+
+        this.viewBinding.textInputTitle.error = viewState.titleErrorText
+        this.viewBinding.textInputContent.error = viewState.contentsErrorText
+
+        this.viewBinding.textInputTitle.isErrorEnabled = viewState.showTitleError
+        this.viewBinding.textInputContent.isErrorEnabled = viewState.showContentsError
+    }
+
+    override fun openNoteDetailsScreen() {
+        // ToDo: Open Note Details screen and finish this activity so it gets removed from stack
+        Toast.makeText(this, "Open note details screen", Toast.LENGTH_SHORT).show()
     }
 }
