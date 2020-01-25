@@ -3,13 +3,13 @@ package com.varunbarad.takehome.notes.screens.create_note
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.varunbarad.takehome.notes.R
 import com.varunbarad.takehome.notes.databinding.ActivityCreateNoteBinding
 import com.varunbarad.takehome.notes.repositories.InMemoryNotesRepository
+import com.varunbarad.takehome.notes.screens.note_details.NoteDetailsActivity
 import com.varunbarad.takehome.notes.util.Event
 import io.reactivex.Observable
 
@@ -90,7 +90,7 @@ class CreateNoteActivity : AppCompatActivity(), CreateNoteView {
     }
 
     override fun openNoteDetailsScreen(noteId: Long) {
-        // ToDo: Open Note Details screen and finish this activity so it gets removed from stack
-        Toast.makeText(this, "Open note details screen", Toast.LENGTH_SHORT).show()
+        NoteDetailsActivity.start(this, noteId)
+        this.finish()
     }
 }
