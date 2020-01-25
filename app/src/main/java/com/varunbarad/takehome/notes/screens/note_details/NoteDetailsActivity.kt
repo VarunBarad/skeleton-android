@@ -3,6 +3,7 @@ package com.varunbarad.takehome.notes.screens.note_details
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
@@ -71,9 +72,11 @@ class NoteDetailsActivity : AppCompatActivity(), NoteDetailsView {
         this.viewBinding.textViewContent.text = viewState.noteContentText
 
         if (viewState.isLoaderVisible) {
-            // ToDo: Hide all text fields and show loader
+            this.viewBinding.containerNoteDetails.visibility = View.GONE
+            this.viewBinding.progressBar.visibility = View.VISIBLE
         } else {
-            // ToDo: Hide the loader and show all 3 text fields
+            this.viewBinding.containerNoteDetails.visibility = View.VISIBLE
+            this.viewBinding.progressBar.visibility = View.GONE
         }
     }
 
