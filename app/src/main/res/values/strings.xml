@@ -2,4 +2,7 @@
     <string name="app_name">Take Home - Notes</string>
     <string name="title_activity_list_notes">@string/app_name</string>
     <string name="title_activity_create_note">Create new Note</string>
+    <string name="label_save">Save</string>
+    <string name="label_title">Title</string>
+    <string name="label_content">Content</string>
 </resources>
