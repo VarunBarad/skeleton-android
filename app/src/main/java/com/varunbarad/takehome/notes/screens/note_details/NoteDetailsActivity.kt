@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.varunbarad.takehome.notes.R
 import com.varunbarad.takehome.notes.databinding.ActivityNoteDetailsBinding
+import com.varunbarad.takehome.notes.repositories.InMemoryNotesRepository
 
 class NoteDetailsActivity : AppCompatActivity(), NoteDetailsView {
     companion object {
@@ -23,6 +24,8 @@ class NoteDetailsActivity : AppCompatActivity(), NoteDetailsView {
 
     private lateinit var viewBinding: ActivityNoteDetailsBinding
 
+    private lateinit var presenter: NoteDetailsPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.viewBinding = DataBindingUtil.setContentView(
@@ -32,6 +35,34 @@ class NoteDetailsActivity : AppCompatActivity(), NoteDetailsView {
 
         this.setSupportActionBar(this.viewBinding.toolbar)
         this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        this.presenter = NoteDetailsPresenter(
+            this,
+            InMemoryNotesRepository,
+            this.getPassedNoteId()
+        )
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        this.presenter.onStart()
+    }
+
+    override fun onStop() {
+        this.presenter.onStop()
+
+        super.onStop()
+    }
+
+    private fun getPassedNoteId(): Long {
+        val passedNoteId = this.intent.extras?.getLong(EXTRA_NOTE_ID)
+
+        if (passedNoteId == null) {
+            throw IllegalArgumentException("No note-id was passed to note-details screen")
+        } else {
+            return passedNoteId
+        }
     }
 
     override fun updateScreen(viewState: NoteDetailsViewState) {
