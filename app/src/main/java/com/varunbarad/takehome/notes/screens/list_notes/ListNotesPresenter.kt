@@ -1,6 +1,8 @@
 package com.varunbarad.takehome.notes.screens.list_notes
 
+import com.varunbarad.takehome.notes.external_services.local_database.model.DbNote
 import com.varunbarad.takehome.notes.repositories.NotesRepository
+import com.varunbarad.takehome.notes.util.toUiNote
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 
@@ -17,6 +19,13 @@ class ListNotesPresenter(
                 .subscribeBy {
                     this.view.openCreateNoteScreen()
                 }
+        )
+
+        this.serviceDisposables.add(
+            this.notesRepository
+                .getAllNotesSortedReverseChronologically()
+                .map { databaseNotes: List<DbNote> -> databaseNotes.map { it.toUiNote() } }
+                .subscribeBy { notes -> this.view.updateScreen(ListNotesViewState(notes)) }
         )
     }
 
