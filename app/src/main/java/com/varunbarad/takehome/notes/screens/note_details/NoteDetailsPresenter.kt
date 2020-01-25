@@ -13,7 +13,7 @@ class NoteDetailsPresenter(
     private val notesRepository: NotesRepository,
     private val noteId: Long
 ) {
-    private val timestampFormat = SimpleDateFormat("dd MMMMM yyyy, hh:mm a", Locale.getDefault())
+    private val timestampFormat = SimpleDateFormat("dd LLL yyyy, hh:mm a", Locale.getDefault())
 
     private val serviceDisposables = CompositeDisposable()
 

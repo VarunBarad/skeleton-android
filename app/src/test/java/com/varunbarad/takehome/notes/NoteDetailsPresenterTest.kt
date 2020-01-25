@@ -90,7 +90,7 @@ class NoteDetailsPresenterTest {
         timestamp = Date(System.currentTimeMillis())
     )
     private val formattedTimestampText: String = SimpleDateFormat(
-        "dd MMMMM yyyy, hh:mm a",
+        "dd LLL yyyy, hh:mm a",
         Locale.getDefault()
     ).format(note.timestamp!!) // We know that timestamp is not null here since we initialized it just above
 }
