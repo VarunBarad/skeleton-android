@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     dataBinding.enabled = true
@@ -46,6 +47,11 @@ dependencies {
 
     // Testing Libraries
     testImplementation "junit:junit:${libraryVersions.jUnit.core}"
+
+    // Mockito
+    testImplementation "org.mockito:mockito-core:${libraryVersions.mockito.core}"
+
+    // Android Instrumentation Tests
     androidTestImplementation "androidx.test.ext:junit:${libraryVersions.jUnit.androidExtension}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${libraryVersions.espresso.core}"
 }
