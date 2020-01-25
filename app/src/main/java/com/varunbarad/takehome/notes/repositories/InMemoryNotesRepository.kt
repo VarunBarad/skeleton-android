@@ -1,6 +1,7 @@
 package com.varunbarad.takehome.notes.repositories
 
 import com.varunbarad.takehome.notes.external_services.local_database.model.DbNote
+import com.varunbarad.takehome.notes.util.ThreadSchedulers
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
@@ -33,9 +34,13 @@ object InMemoryNotesRepository : NotesRepository {
 
     override fun getAllNotesSortedReverseChronologically(): Observable<List<DbNote>> {
         return this.notesSubject
+            .subscribeOn(ThreadSchedulers.io())
+            .observeOn(ThreadSchedulers.main())
     }
 
     override fun getNoteDetails(noteId: Long): Single<DbNote> {
         return Single.just(this.notes.first { it.id == noteId })
+            .subscribeOn(ThreadSchedulers.io())
+            .observeOn(ThreadSchedulers.main())
     }
 }
