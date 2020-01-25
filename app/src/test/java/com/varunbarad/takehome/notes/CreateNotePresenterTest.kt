@@ -219,6 +219,25 @@ class CreateNotePresenterTest {
         )
     }
 
+    @Test
+    fun testInsertNoteToRepositoryWhenTitleAndContentIsValid() {
+        val titleValue = validNoteTitle
+        val contentValue = validNoteContent
+
+        `when`(createNoteView.onButtonSaveNoteClick()).thenReturn(Observable.just(Event.IGNORE))
+        `when`(createNoteView.getTitleEditTextValue()).thenReturn(titleValue)
+        `when`(createNoteView.getContentsEditTextValue()).thenReturn(contentValue)
+
+        createNotePresenter.onStart()
+
+        verify(notesRepository, times(1)).insertNewNote(
+            DbNote(
+                title = titleValue,
+                contents = contentValue
+            )
+        )
+    }
+
     private val validNoteTitle = "This is a valid title"
     private val validNoteContent = "This is a valid note content"
 
