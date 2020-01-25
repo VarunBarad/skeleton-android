@@ -75,7 +75,7 @@ class ListNotesPresenterTest {
 
         listNotesPresenter.onStart()
 
-        verify(listNotesView).updateScreen(ListNotesViewState(emptyList()))
+        verify(listNotesView).updateScreen(ListNotesViewState(emptyList(), true))
     }
 
     @Test
@@ -90,7 +90,37 @@ class ListNotesPresenterTest {
 
         listNotesPresenter.onStart()
 
-        verify(listNotesView).updateScreen(ListNotesViewState(notes.map { it.toUiNote() }))
+        verify(listNotesView).updateScreen(ListNotesViewState(notes.map { it.toUiNote() }, false))
+    }
+
+    @Test
+    fun testShowNoStoredNotesMessageWhenZeroItemsReturnedFromRepository() {
+        `when`(notesRepository.getAllNotesSortedReverseChronologically()).thenReturn(
+            Observable.just(
+                emptyList()
+            )
+        )
+        `when`(listNotesView.onButtonCreateNoteClick()).thenReturn(Observable.never())
+        `when`(listNotesView.onNoteClick()).thenReturn(Observable.never())
+
+        listNotesPresenter.onStart()
+
+        verify(listNotesView).updateScreen(ListNotesViewState(emptyList(), true))
+    }
+
+    @Test
+    fun testNoShowNoStoredNotesMessageWhen4ItemsReturnedFromRepository() {
+        `when`(notesRepository.getAllNotesSortedReverseChronologically()).thenReturn(
+            Observable.just(
+                notes
+            )
+        )
+        `when`(listNotesView.onButtonCreateNoteClick()).thenReturn(Observable.never())
+        `when`(listNotesView.onNoteClick()).thenReturn(Observable.never())
+
+        listNotesPresenter.onStart()
+
+        verify(listNotesView).updateScreen(ListNotesViewState(notes.map { it.toUiNote() }, false))
     }
 
     @Test
