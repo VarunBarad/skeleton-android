@@ -1,8 +1,8 @@
 package com.varunbarad.takehome.notes.repositories
 
 import com.varunbarad.takehome.notes.external_services.local_database.model.DbNote
-import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
 import java.util.*
 
@@ -15,18 +15,19 @@ class InMemoryNotesRepository : NotesRepository {
         notesSubject.onNext(notes)
     }
 
-    override fun insertNewNote(note: DbNote): Completable {
-        return Completable.fromCallable {
+    override fun insertNewNote(note: DbNote): Single<Long> {
+        return Single.fromCallable {
+            val noteId: Long = this.notes.size.toLong()
             this.notes.add(
                 note.copy(
                     // Using index as temporary ID since note-deletion is not supported
                     // therefore ID clashes can't occur
-                    id = this.notes.size,
+                    id = noteId,
                     timestamp = Date(System.currentTimeMillis())
                 )
             )
-        }.andThen {
             notesSubject.onNext(this.notes.sortedByDescending { it.timestamp })
+            noteId
         }
     }
 
