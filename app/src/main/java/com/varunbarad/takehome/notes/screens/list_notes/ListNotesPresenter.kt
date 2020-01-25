@@ -1,10 +1,12 @@
 package com.varunbarad.takehome.notes.screens.list_notes
 
+import com.varunbarad.takehome.notes.repositories.NotesRepository
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 
 class ListNotesPresenter(
-    private val view: ListNotesView
+    private val view: ListNotesView,
+    private val notesRepository: NotesRepository
 ) {
     private val serviceDisposables = CompositeDisposable()
 
