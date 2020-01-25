@@ -93,6 +93,30 @@ class ListNotesPresenterTest {
         verify(listNotesView).updateScreen(ListNotesViewState(notes.map { it.toUiNote() }))
     }
 
+    @Test
+    fun testOpenNoteDetailsScreenCalledWithCorrectNoteIdWhenNoteIsClicked() {
+        val note = notes[0].toUiNote()
+
+        `when`(notesRepository.getAllNotesSortedReverseChronologically()).thenReturn(Observable.never())
+        `when`(listNotesView.onButtonCreateNoteClick()).thenReturn(Observable.never())
+        `when`(listNotesView.onNoteClick()).thenReturn(Observable.just(note))
+
+        listNotesPresenter.onStart()
+
+        verify(listNotesView).openNoteDetailsScreen(note.noteId)
+    }
+
+    @Test
+    fun testOpenNoteDetailsScreenNotCalledWhenNoNoteIsClicked() {
+        `when`(notesRepository.getAllNotesSortedReverseChronologically()).thenReturn(Observable.never())
+        `when`(listNotesView.onButtonCreateNoteClick()).thenReturn(Observable.never())
+        `when`(listNotesView.onNoteClick()).thenReturn(Observable.never())
+
+        listNotesPresenter.onStart()
+
+        verify(listNotesView, never()).openNoteDetailsScreen(anyLong())
+    }
+
     private val notes: List<DbNote> = listOf(
         DbNote(1, "Title 1", "Content 1", Date(System.currentTimeMillis())),
         DbNote(2, "Title 2", "Content 2", Date(System.currentTimeMillis())),
