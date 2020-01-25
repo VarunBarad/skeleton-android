@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Take Home - Notes</string>
+    <string name="title_activity_list_notes">@string/app_name</string>
 </resources>
