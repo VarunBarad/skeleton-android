@@ -25,7 +25,14 @@ class ListNotesPresenter(
             this.notesRepository
                 .getAllNotesSortedReverseChronologically()
                 .map { databaseNotes: List<DbNote> -> databaseNotes.map { it.toUiNote() } }
-                .subscribeBy { notes -> this.view.updateScreen(ListNotesViewState(notes)) }
+                .subscribeBy { notes ->
+                    this.view.updateScreen(
+                        ListNotesViewState(
+                            notes = notes,
+                            isNoStoredNotesMessageVisible = notes.isEmpty()
+                        )
+                    )
+                }
         )
 
         this.serviceDisposables.add(
