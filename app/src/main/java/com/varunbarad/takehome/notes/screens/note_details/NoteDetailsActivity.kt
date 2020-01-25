@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.varunbarad.takehome.notes.R
 import com.varunbarad.takehome.notes.databinding.ActivityNoteDetailsBinding
-import com.varunbarad.takehome.notes.repositories.InMemoryNotesRepository
+import com.varunbarad.takehome.notes.util.Dependencies
 
 class NoteDetailsActivity : AppCompatActivity(), NoteDetailsView {
     companion object {
@@ -39,7 +39,7 @@ class NoteDetailsActivity : AppCompatActivity(), NoteDetailsView {
 
         this.presenter = NoteDetailsPresenter(
             this,
-            InMemoryNotesRepository,
+            Dependencies.getRoomNotesRepository(this),
             this.getPassedNoteId()
         )
     }

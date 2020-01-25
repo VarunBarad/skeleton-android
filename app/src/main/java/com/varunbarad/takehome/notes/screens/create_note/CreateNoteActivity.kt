@@ -8,8 +8,8 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.varunbarad.takehome.notes.R
 import com.varunbarad.takehome.notes.databinding.ActivityCreateNoteBinding
-import com.varunbarad.takehome.notes.repositories.InMemoryNotesRepository
 import com.varunbarad.takehome.notes.screens.note_details.NoteDetailsActivity
+import com.varunbarad.takehome.notes.util.Dependencies
 import com.varunbarad.takehome.notes.util.Event
 import io.reactivex.Observable
 
@@ -37,7 +37,7 @@ class CreateNoteActivity : AppCompatActivity(), CreateNoteView {
 
         this.presenter = CreateNotePresenter(
             this,
-            InMemoryNotesRepository
+            Dependencies.getRoomNotesRepository(this)
         )
     }
 

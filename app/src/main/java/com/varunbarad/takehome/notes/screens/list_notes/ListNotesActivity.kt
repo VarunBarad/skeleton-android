@@ -9,10 +9,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.varunbarad.takehome.notes.R
 import com.varunbarad.takehome.notes.databinding.ActivityListNotesBinding
 import com.varunbarad.takehome.notes.model.UiNote
-import com.varunbarad.takehome.notes.repositories.InMemoryNotesRepository
 import com.varunbarad.takehome.notes.screens.create_note.CreateNoteActivity
 import com.varunbarad.takehome.notes.screens.list_notes.notes_adapter.NotesAdapter
 import com.varunbarad.takehome.notes.screens.note_details.NoteDetailsActivity
+import com.varunbarad.takehome.notes.util.Dependencies
 import com.varunbarad.takehome.notes.util.Event
 import io.reactivex.Observable
 
@@ -44,7 +44,7 @@ class ListNotesActivity : AppCompatActivity(), ListNotesView {
 
         this.presenter = ListNotesPresenter(
             this,
-            InMemoryNotesRepository
+            Dependencies.getRoomNotesRepository(this)
         )
     }
 
