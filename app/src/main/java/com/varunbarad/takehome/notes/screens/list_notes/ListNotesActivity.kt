@@ -3,14 +3,21 @@ package com.varunbarad.takehome.notes.screens.list_notes
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.varunbarad.takehome.notes.R
 import com.varunbarad.takehome.notes.databinding.ActivityListNotesBinding
+import com.varunbarad.takehome.notes.model.UiNote
 import com.varunbarad.takehome.notes.screens.create_note.CreateNoteActivity
+import com.varunbarad.takehome.notes.screens.list_notes.notes_adapter.NotesAdapter
+import com.varunbarad.takehome.notes.screens.note_details.NoteDetailsActivity
 import com.varunbarad.takehome.notes.util.Event
 import io.reactivex.Observable
 
 class ListNotesActivity : AppCompatActivity(), ListNotesView {
     private lateinit var viewBinding: ActivityListNotesBinding
+
+    private val notesAdapter: NotesAdapter = NotesAdapter()
 
     private lateinit var presenter: ListNotesPresenter
 
@@ -18,6 +25,20 @@ class ListNotesActivity : AppCompatActivity(), ListNotesView {
         super.onCreate(savedInstanceState)
         this.viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_list_notes)
         this.setSupportActionBar(this.viewBinding.toolbar)
+
+        val recyclerViewLayoutManager = LinearLayoutManager(
+            this.viewBinding.recyclerViewNotes.context,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        this.viewBinding.recyclerViewNotes.layoutManager = recyclerViewLayoutManager
+        this.viewBinding.recyclerViewNotes.addItemDecoration(
+            DividerItemDecoration(
+                this.viewBinding.recyclerViewNotes.context,
+                recyclerViewLayoutManager.orientation
+            )
+        )
+        this.viewBinding.recyclerViewNotes.adapter = this.notesAdapter
 
         this.presenter = ListNotesPresenter(this)
     }
@@ -43,7 +64,13 @@ class ListNotesActivity : AppCompatActivity(), ListNotesView {
         }
     }
 
+    override fun onNoteClick(): Observable<UiNote> = this.notesAdapter.getNoteClickObservable()
+
     override fun openCreateNoteScreen() {
         CreateNoteActivity.start(this)
+    }
+
+    override fun openNoteDetailsScreen(noteId: Long) {
+        NoteDetailsActivity.start(this, noteId)
     }
 }
