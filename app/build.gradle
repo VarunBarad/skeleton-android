@@ -45,6 +45,12 @@ dependencies {
     // Material Design
     implementation "com.google.android.material:material:${libraryVersions.androidX.materialDesign}"
 
+    // Room database library
+    implementation "androidx.room:room-runtime:${libraryVersions.androidX.room}"
+    annotationProcessor "androidx.room:room-compiler:${libraryVersions.androidX.room}"
+    kapt "androidx.room:room-compiler:${libraryVersions.androidX.room}"
+    implementation "androidx.room:room-rxjava2:${libraryVersions.androidX.room}"
+
     // Testing Libraries
     testImplementation "junit:junit:${libraryVersions.jUnit.core}"
 
