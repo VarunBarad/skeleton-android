@@ -36,6 +36,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/list_item_note" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView_emptyNotesMessage"
+                style="@style/TextAppearance.MaterialComponents.Headline4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_activity_horizontal"
+                android:layout_marginEnd="@dimen/margin_activity_horizontal"
+                android:gravity="center"
+                android:text="@string/message_noStoredNotes"
+                android:textColor="@color/colorTextSecondary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
