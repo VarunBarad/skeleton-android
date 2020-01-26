@@ -31,3 +31,15 @@ gradlew.bat test
 ```
 
 After it finishes, you can find the results of the test in this directory: `<project-dir>/app/build/reports/test/testReleaseUnitTest`
+
+## Screenshots
+
+![Home Screen - No Notes](./screenshots/01 Home Screen - No Notes.png)
+
+![Home Screen - With Notes](./screenshots/02 Home Screen - With Notes.png)
+
+![Create Note Screen - Empty](./screenshots/03 Create Note Screen - Empty.png)
+
+![Create Note Screen - Filled](./screenshots/04 Create Note Screen - Filled.png)
+
+![Note Details Screen](./screenshots/05 Note Details Screen.png)
