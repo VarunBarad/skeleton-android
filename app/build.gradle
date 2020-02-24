@@ -4,6 +4,13 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def lintTask = tasks["lint${variant.name.capitalize()}"]
+            output.assemble.dependsOn lintTask
+        }
+    }
+
     dataBinding.enabled = true
 
     compileSdkVersion 29
@@ -25,6 +32,9 @@ android {
 }
 
 dependencies {
+    // Personal lint checks
+    lintChecks "com.varunbarad:android-lint-checks:0.2.0"
+
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${libraryVersions.kotlin}"
 
