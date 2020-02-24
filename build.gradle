@@ -8,11 +8,11 @@ buildscript {
                         rxAndroid: '2.1.1'
                 ],
                 androidX: [
-                        kotlinExtensions: '1.1.0',
+                        kotlinExtensions: '1.2.0',
                         appCompat       : '1.1.0',
                         constraintLayout: '1.1.3',
-                        materialDesign  : '1.0.0',
-                        room            : '2.2.3',
+                        materialDesign  : '1.1.0',
+                        room            : '2.2.4',
                 ],
                 jUnit   : [
                         core            : '4.12',
