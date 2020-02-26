@@ -3,11 +3,9 @@ package com.varunbarad.skeleton.android.screens.list_notes
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.varunbarad.skeleton.android.R
 import com.varunbarad.skeleton.android.databinding.ActivityListNotesBinding
 import com.varunbarad.skeleton.android.model.UiNote
 import com.varunbarad.skeleton.android.screens.create_note.CreateNoteActivity
@@ -26,7 +24,8 @@ class ListNotesActivity : AppCompatActivity(), ListNotesView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_list_notes)
+        this.viewBinding = ActivityListNotesBinding.inflate(this.layoutInflater)
+        this.setContentView(this.viewBinding.root)
         this.setSupportActionBar(this.viewBinding.toolbar)
 
         val recyclerViewLayoutManager = LinearLayoutManager(

@@ -13,7 +13,5 @@ class NoteViewHolder(
         this.viewBinding.textViewContent.text = note.content
 
         this.viewBinding.containerNote.setOnClickListener { this.noteClickListener(note) }
-
-        this.viewBinding.executePendingBindings()
     }
 }

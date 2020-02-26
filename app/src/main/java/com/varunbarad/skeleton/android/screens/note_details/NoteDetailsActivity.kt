@@ -5,9 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
-import com.varunbarad.skeleton.android.R
 import com.varunbarad.skeleton.android.databinding.ActivityNoteDetailsBinding
 import com.varunbarad.skeleton.android.util.Dependencies
 
@@ -29,10 +27,8 @@ class NoteDetailsActivity : AppCompatActivity(), NoteDetailsView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.viewBinding = DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_note_details
-        )
+        this.viewBinding = ActivityNoteDetailsBinding.inflate(this.layoutInflater)
+        this.setContentView(this.viewBinding.root)
 
         this.setSupportActionBar(this.viewBinding.toolbar)
         this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
