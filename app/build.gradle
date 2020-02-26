@@ -33,7 +33,7 @@ android {
 
 dependencies {
     // Personal lint checks
-    lintChecks "com.varunbarad:android-lint-checks:0.2.0"
+    lintChecks "com.varunbarad:android-lint-checks:${libraryVersions.varunAndroidLintChecks}"
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${libraryVersions.kotlin}"
