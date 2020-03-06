@@ -89,4 +89,12 @@
                 android:layout_gravity="center" />
         </FrameLayout>
     </FrameLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_bookmarkNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_star_border" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

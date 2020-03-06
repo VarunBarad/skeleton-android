@@ -6,8 +6,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.varunbarad.skeleton.android.R
 import com.varunbarad.skeleton.android.databinding.ActivityNoteDetailsBinding
 import com.varunbarad.skeleton.android.util.Dependencies
+import com.varunbarad.skeleton.android.util.Event
+import io.reactivex.Observable
 
 class NoteDetailsActivity : AppCompatActivity(), NoteDetailsView {
     companion object {
@@ -62,10 +65,23 @@ class NoteDetailsActivity : AppCompatActivity(), NoteDetailsView {
         }
     }
 
+    override fun onButtonBookmarkNoteClick(): Observable<Event> {
+        return Observable.create { emitter ->
+            this.viewBinding.buttonBookmarkNote.setOnClickListener { emitter.onNext(Event.IGNORE) }
+            emitter.setCancellable { this.viewBinding.buttonBookmarkNote.setOnClickListener(null) }
+        }
+    }
+
     override fun updateScreen(viewState: NoteDetailsViewState) {
         this.viewBinding.textViewTitle.text = viewState.noteTitleText
         this.viewBinding.textViewTimestamp.text = viewState.noteTimestampText
         this.viewBinding.textViewContent.text = viewState.noteContentText
+
+        if (viewState.isStarFilled) {
+            this.viewBinding.buttonBookmarkNote.setImageResource(R.drawable.ic_star_filled)
+        } else {
+            this.viewBinding.buttonBookmarkNote.setImageResource(R.drawable.ic_star_border)
+        }
 
         if (viewState.isLoaderVisible) {
             this.viewBinding.containerNoteDetails.visibility = View.GONE

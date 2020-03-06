@@ -21,7 +21,7 @@ interface NotesDao {
     fun getBookmarkedNotesSortedReverseChronologically(): Observable<List<DbNote>>
 
     @Query("select * from Notes where id = :noteId")
-    fun getNoteDetails(noteId: Long): Single<DbNote>
+    fun getNoteDetails(noteId: Long): Observable<DbNote>
 
     @Update
     fun updateNoteDetails(note: DbNote): Completable

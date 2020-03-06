@@ -11,7 +11,7 @@ interface NotesRepository {
     fun getAllNotesSortedReverseChronologically(): Observable<List<DbNote>>
     fun getBookmarkedNotesSortedReverseChronologically(): Observable<List<DbNote>>
 
-    fun getNoteDetails(noteId: Long): Single<DbNote>
+    fun getNoteDetails(noteId: Long): Observable<DbNote>
 
     fun updateNote(note: DbNote): Completable
 }

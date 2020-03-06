@@ -29,6 +29,7 @@ class NoteDetailsPresenter(
                                 noteTitleText = "",
                                 noteContentText = "",
                                 noteTimestampText = "",
+                                isStarFilled = false,
                                 isLoaderVisible = false
                             )
                         )
@@ -38,12 +39,13 @@ class NoteDetailsPresenter(
                         )
                         this.view.showMessage("Error loading note. Try again later.")
                     },
-                    onSuccess = { note ->
+                    onNext = { note ->
                         this.view.updateScreen(
                             NoteDetailsViewState(
                                 noteTitleText = note.title,
                                 noteContentText = note.content,
                                 noteTimestampText = this.timestampFormat.format(note.timestamp),
+                                isStarFilled = note.isBookmarked,
                                 isLoaderVisible = false
                             )
                         )
@@ -51,11 +53,31 @@ class NoteDetailsPresenter(
                 )
         )
 
+        this.serviceDisposables.add(
+            this.view
+                .onButtonBookmarkNoteClick()
+                .flatMapSingle { this.notesRepository.getNoteDetails(this.noteId).firstOrError() }
+                .flatMapSingle { note ->
+                    val newBookmarkState = !note.isBookmarked
+                    this.notesRepository
+                        .updateNote(note.copy(isBookmarked = newBookmarkState))
+                        .toSingle { newBookmarkState }
+                }.subscribeBy { isBookmarked ->
+                    val message = if (isBookmarked) {
+                        "Note bookmarked"
+                    } else {
+                        "Bookmark removed from note"
+                    }
+                    this.view.showMessage(message)
+                }
+        )
+
         this.view.updateScreen(
             NoteDetailsViewState(
                 noteTitleText = "",
                 noteContentText = "",
                 noteTimestampText = "",
+                isStarFilled = false,
                 isLoaderVisible = true
             )
         )

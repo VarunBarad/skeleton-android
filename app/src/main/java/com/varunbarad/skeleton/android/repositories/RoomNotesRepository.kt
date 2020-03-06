@@ -28,7 +28,7 @@ class RoomNotesRepository(private val notesDao: NotesDao) : NotesRepository {
             .observeOn(ThreadSchedulers.main())
     }
 
-    override fun getNoteDetails(noteId: Long): Single<DbNote> {
+    override fun getNoteDetails(noteId: Long): Observable<DbNote> {
         return notesDao.getNoteDetails(noteId)
             .subscribeOn(ThreadSchedulers.io())
             .observeOn(ThreadSchedulers.main())
