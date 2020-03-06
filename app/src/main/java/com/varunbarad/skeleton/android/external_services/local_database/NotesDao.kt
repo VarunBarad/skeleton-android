@@ -15,6 +15,9 @@ interface NotesDao {
     @Query("select * from Notes order by timestamp desc")
     fun getAllNotesSortedReverseChronologically(): Observable<List<DbNote>>
 
+    @Query("select * from Notes where isBookmarked = 1 order by timestamp desc")
+    fun getBookmarkedNotesSortedReverseChronologically(): Observable<List<DbNote>>
+
     @Query("select * from Notes where id = :noteId")
     fun getNoteDetails(noteId: Long): Single<DbNote>
 }
