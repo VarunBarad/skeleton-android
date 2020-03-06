@@ -3,7 +3,9 @@ package com.varunbarad.skeleton.android.external_services.local_database
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.varunbarad.skeleton.android.external_services.local_database.model.DbNote
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -20,4 +22,7 @@ interface NotesDao {
 
     @Query("select * from Notes where id = :noteId")
     fun getNoteDetails(noteId: Long): Single<DbNote>
+
+    @Update
+    fun updateNoteDetails(note: DbNote): Completable
 }
