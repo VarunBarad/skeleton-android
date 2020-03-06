@@ -21,6 +21,12 @@ class RoomNotesRepository(private val notesDao: NotesDao) : NotesRepository {
             .observeOn(ThreadSchedulers.main())
     }
 
+    override fun getBookmarkedNotesSortedReverseChronologically(): Observable<List<DbNote>> {
+        return notesDao.getBookmarkedNotesSortedReverseChronologically()
+            .subscribeOn(ThreadSchedulers.io())
+            .observeOn(ThreadSchedulers.main())
+    }
+
     override fun getNoteDetails(noteId: Long): Single<DbNote> {
         return notesDao.getNoteDetails(noteId)
             .subscribeOn(ThreadSchedulers.io())
