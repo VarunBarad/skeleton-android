@@ -11,5 +11,6 @@ data class DbNote(
     val id: Long? = null,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "content") val contents: String,
-    @ColumnInfo(name = "timestamp") val timestamp: Date? = null
+    @ColumnInfo(name = "timestamp") val timestamp: Date? = null,
+    @ColumnInfo(name = "isBookmarked") val isBookmarked: Boolean = false
 )

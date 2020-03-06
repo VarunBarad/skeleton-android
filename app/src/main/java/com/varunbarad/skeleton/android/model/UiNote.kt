@@ -7,7 +7,8 @@ data class UiNote(
     val noteId: Long,
     val title: String,
     val content: String,
-    val timestamp: Date
+    val timestamp: Date,
+    val isBookmarked: Boolean
 ) {
     companion object {
         @JvmStatic

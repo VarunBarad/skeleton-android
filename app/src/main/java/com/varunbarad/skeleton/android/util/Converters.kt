@@ -11,6 +11,7 @@ fun DbNote.toUiNote(): UiNote {
         title = this.title,
         content = this.contents,
         timestamp = this.timestamp
-            ?: throw IllegalArgumentException("Note to be shown has to have a timestamp")
+            ?: throw IllegalArgumentException("Note to be shown has to have a timestamp"),
+        isBookmarked = this.isBookmarked
     )
 }
