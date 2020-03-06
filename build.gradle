@@ -1,7 +1,7 @@
 buildscript {
     ext {
         libraryVersions = [
-                varunAndroidLintChecks: '0.2.0',
+                varunAndroidLintChecks: '0.3.0',
                 kotlin                : '1.3.61',
                 rxJava                : [
                         rxJava2  : '2.2.9',
