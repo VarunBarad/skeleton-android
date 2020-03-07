@@ -1,24 +1,19 @@
 package com.varunbarad.skeleton.android.screens.list_notes
 
 import android.os.Bundle
-import android.view.View
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.varunbarad.skeleton.android.R
 import com.varunbarad.skeleton.android.databinding.ActivityListNotesBinding
-import com.varunbarad.skeleton.android.model.UiNote
 import com.varunbarad.skeleton.android.screens.create_note.CreateNoteActivity
-import com.varunbarad.skeleton.android.screens.list_notes.notes_adapter.NotesAdapter
-import com.varunbarad.skeleton.android.screens.note_details.NoteDetailsActivity
-import com.varunbarad.skeleton.android.util.Dependencies
+import com.varunbarad.skeleton.android.screens.list_notes.all.AllNotesListFragment
+import com.varunbarad.skeleton.android.screens.list_notes.bookmarked.BookmarkedNotesListFragment
 import com.varunbarad.skeleton.android.util.Event
 import io.reactivex.Observable
 
 class ListNotesActivity : AppCompatActivity(), ListNotesView {
     private lateinit var viewBinding: ActivityListNotesBinding
-
-    private val notesAdapter: NotesAdapter = NotesAdapter()
 
     private lateinit var presenter: ListNotesPresenter
 
@@ -28,28 +23,29 @@ class ListNotesActivity : AppCompatActivity(), ListNotesView {
         this.setContentView(this.viewBinding.root)
         this.setSupportActionBar(this.viewBinding.toolbar)
 
-        val recyclerViewLayoutManager = LinearLayoutManager(
-            this.viewBinding.recyclerViewNotes.context,
-            LinearLayoutManager.VERTICAL,
-            false
-        )
-        this.viewBinding.recyclerViewNotes.layoutManager = recyclerViewLayoutManager
-        this.viewBinding.recyclerViewNotes.addItemDecoration(
-            DividerItemDecoration(
-                this.viewBinding.recyclerViewNotes.context,
-                recyclerViewLayoutManager.orientation
-            )
-        )
-        this.viewBinding.recyclerViewNotes.adapter = this.notesAdapter
+        if (savedInstanceState == null) {
+            val initialFragment = this.supportFragmentManager
+                .findFragmentByTag(AllNotesListFragment.FRAGMENT_TAG)
+                ?: AllNotesListFragment()
 
-        this.presenter = ListNotesPresenter(
-            this,
-            Dependencies.getRoomNotesRepository(this)
-        )
+            this.supportFragmentManager
+                .beginTransaction()
+                .replace(
+                    R.id.container_fragment,
+                    initialFragment,
+                    AllNotesListFragment.FRAGMENT_TAG
+                ).commitAllowingStateLoss()
+        }
+
+        this.presenter = ListNotesPresenter(this)
     }
 
     override fun onStart() {
         super.onStart()
+
+        this.viewBinding
+            .bottomNavigationView
+            .setOnNavigationItemSelectedListener(this::onBottomNavigationItemSelected)
 
         this.presenter.onStart()
     }
@@ -58,28 +54,52 @@ class ListNotesActivity : AppCompatActivity(), ListNotesView {
         this.presenter.onStop()
 
         this.viewBinding.buttonCreateNote.setOnClickListener(null)
+        this.viewBinding.bottomNavigationView.setOnNavigationItemSelectedListener(null)
 
         super.onStop()
+    }
+
+    private fun onBottomNavigationItemSelected(menuItem: MenuItem): Boolean {
+        when (menuItem.itemId) {
+            R.id.category_all -> {
+                val allNotesListFragment = this.supportFragmentManager
+                    .findFragmentByTag(AllNotesListFragment.FRAGMENT_TAG)
+                    ?: AllNotesListFragment()
+
+                this.supportFragmentManager
+                    .beginTransaction()
+                    .replace(
+                        R.id.container_fragment,
+                        allNotesListFragment,
+                        AllNotesListFragment.FRAGMENT_TAG
+                    ).commitAllowingStateLoss()
+
+                return true
+            }
+            R.id.category_bookmarked -> {
+                val bookmarkedNotesListFragment = this.supportFragmentManager
+                    .findFragmentByTag(BookmarkedNotesListFragment.FRAGMENT_TAG)
+                    ?: BookmarkedNotesListFragment()
+
+                this.supportFragmentManager
+                    .beginTransaction()
+                    .replace(
+                        R.id.container_fragment,
+                        bookmarkedNotesListFragment,
+                        BookmarkedNotesListFragment.FRAGMENT_TAG
+                    ).commitAllowingStateLoss()
+
+                return true
+            }
+        }
+
+        return false
     }
 
     override fun onButtonCreateNoteClick(): Observable<Event> {
         return Observable.create { emitter ->
             this.viewBinding.buttonCreateNote.setOnClickListener { emitter.onNext(Event.IGNORE) }
             emitter.setCancellable { this.viewBinding.buttonCreateNote.setOnClickListener(null) }
-        }
-    }
-
-    override fun onNoteClick(): Observable<UiNote> = this.notesAdapter.getNoteClickObservable()
-
-    override fun updateScreen(viewState: ListNotesViewState) {
-        this.notesAdapter.submitList(viewState.notes)
-
-        if (viewState.isNoStoredNotesMessageVisible) {
-            this.viewBinding.recyclerViewNotes.visibility = View.GONE
-            this.viewBinding.textViewEmptyNotesMessage.visibility = View.VISIBLE
-        } else {
-            this.viewBinding.recyclerViewNotes.visibility = View.VISIBLE
-            this.viewBinding.textViewEmptyNotesMessage.visibility = View.GONE
         }
     }
 
@@ -93,9 +113,5 @@ class ListNotesActivity : AppCompatActivity(), ListNotesView {
 
     override fun openCreateNoteScreen() {
         CreateNoteActivity.start(this)
-    }
-
-    override fun openNoteDetailsScreen(noteId: Long) {
-        NoteDetailsActivity.start(this, noteId)
     }
 }

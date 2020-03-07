@@ -5,9 +5,12 @@
     <string name="title_activity_create_note">Create new Note</string>
     <string name="title_activity_note_details">Note details</string>
 
+    <string name="label_all">All</string>
+    <string name="label_bookmarked">Bookmarked</string>
     <string name="label_save">Save</string>
     <string name="label_title">Title</string>
     <string name="label_content">Content</string>
 
     <string name="message_noStoredNotes">There are no stored notes.\n\nTap that button down there to start creating a new note.</string>
+    <string name="message_noBookmarkedNotes">There are no bookmarked notes.\n\nTap that star button at the bottom of note-details screen to mark that note.</string>
 </resources>
