@@ -43,6 +43,18 @@
         tools:text="Yeah, sure, I mean, if you spend all day shuffling words around, you can make anything sound bad. That's because losers look stuff up while the rest of us are carp'en all them 'diems. That just sounds like slavery with extra steps. You know who's into dragons, Morty? Nerds who refuse to admit they're Christian. Ooohhh can do." />
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageView_bookmarkIcon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="@dimen/margin_activity_horizontal"
+        android:layout_marginTop="@dimen/margin_activity_vertical"
+        android:src="@drawable/ic_star_filled"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_content"
+        app:tint="@color/colorBookmark" />
+
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

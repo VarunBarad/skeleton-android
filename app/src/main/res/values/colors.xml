@@ -5,4 +5,6 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorTextPrimary">#ff000000</color>
     <color name="colorTextSecondary">#80000000</color>
+
+    <color name="colorBookmark">#ffffa000</color>
 </resources>
