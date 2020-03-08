@@ -16,7 +16,11 @@ class BookmarkedNotesListPresenter(
         this.serviceDisposables.add(
             this.notesRepository
                 .getBookmarkedNotesSortedReverseChronologically()
-                .map { databaseNotes: List<DbNote> -> databaseNotes.map { it.toUiNote() } }
+                .map { databaseNotes: List<DbNote> ->
+                    databaseNotes
+                        .filter { it.isBookmarked }
+                        .map { it.toUiNote() }
+                }
                 .subscribeBy { notes ->
                     this.view.updateScreen(
                         BookmarkedNotesListViewState(
