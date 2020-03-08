@@ -6,7 +6,7 @@ import com.varunbarad.skeleton.android.screens.note_details.NoteDetailsPresenter
 import com.varunbarad.skeleton.android.screens.note_details.NoteDetailsView
 import com.varunbarad.skeleton.android.screens.note_details.NoteDetailsViewState
 import com.varunbarad.skeleton.android.util.ThreadSchedulers
-import io.reactivex.Single
+import io.reactivex.Observable
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -39,12 +39,14 @@ class NoteDetailsPresenterTest {
 
     @After
     fun tearDown() {
+        this.noteDetailsPresenter.onStop()
         ThreadSchedulers.disableTesting()
     }
 
     @Test
     fun testLoaderShownFirstWhenScreenStarts() {
-        `when`(notesRepository.getNoteDetails(noteId)).thenReturn(Single.just(note))
+        `when`(notesRepository.getNoteDetails(noteId)).thenReturn(Observable.just(note))
+        `when`(noteDetailsView.onButtonBookmarkNoteClick()).thenReturn(Observable.never())
 
         noteDetailsPresenter.onStart()
 
@@ -53,14 +55,16 @@ class NoteDetailsPresenterTest {
                 noteTitleText = "",
                 noteContentText = "",
                 noteTimestampText = "",
-                isLoaderVisible = true
+                isLoaderVisible = true,
+                isStarFilled = false
             )
         )
     }
 
     @Test
     fun testNoteDetailsShownAfterLoader() {
-        `when`(notesRepository.getNoteDetails(noteId)).thenReturn(Single.just(note))
+        `when`(notesRepository.getNoteDetails(noteId)).thenReturn(Observable.just(note))
+        `when`(noteDetailsView.onButtonBookmarkNoteClick()).thenReturn(Observable.never())
 
         noteDetailsPresenter.onStart()
 
@@ -69,7 +73,8 @@ class NoteDetailsPresenterTest {
                 noteTitleText = "",
                 noteContentText = "",
                 noteTimestampText = "",
-                isLoaderVisible = true
+                isLoaderVisible = true,
+                isStarFilled = false
             )
         )
         verify(noteDetailsView).updateScreen(
@@ -77,7 +82,8 @@ class NoteDetailsPresenterTest {
                 noteTitleText = note.title,
                 noteContentText = note.contents,
                 noteTimestampText = formattedTimestampText,
-                isLoaderVisible = false
+                isLoaderVisible = false,
+                isStarFilled = note.isBookmarked
             )
         )
     }
