@@ -141,8 +141,8 @@ class BookmarkedNotesListPresenterTest {
         DbNote(5, "Title 5", "Content 5", Date(System.currentTimeMillis()), true),
         DbNote(6, "Title 6", "Content 6", Date(System.currentTimeMillis()), true),
         DbNote(7, "Title 7", "Content 7", Date(System.currentTimeMillis()), false),
-        DbNote(8, "Title81", "Cont8nt 1", Date(System.currentTimeMillis()), true),
-        DbNote(9, "Title91", "Cont9nt 1", Date(System.currentTimeMillis()), false)
+        DbNote(8, "Title 8", "Content 8", Date(System.currentTimeMillis()), true),
+        DbNote(9, "Title 9", "Content 9", Date(System.currentTimeMillis()), false)
     ).reversed() // We reverse these to get reverse-chronological sorting here
 
     private val bookmarkedNotes: List<DbNote> = allNotes.filter { it.isBookmarked }
